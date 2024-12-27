@@ -1,0 +1,7 @@
+services:
+  app:
+    image: cecchellone/fail2ban-api:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/fail2ban/fail2ban.sock:/var/run/fail2ban/fail2ban.sock
