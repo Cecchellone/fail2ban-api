@@ -5,9 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,9 +18,15 @@ jobs:
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push to dockerhub
-      uses: docker/build-push-action@v5
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
       with:
-       context:
-       push: true
+       platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+       load: true
        tags: cecchellone/fail2ban-api:latest
